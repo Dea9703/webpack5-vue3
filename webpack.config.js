@@ -4,6 +4,7 @@ const HTMLWebpackPlugin = require('html-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader/dist/index')
 const EsLintPlugin = require('eslint-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const { ProgressPlugin } = require('webpack')
 
 const _resolve = src => path.resolve(__dirname, src)
 
@@ -66,6 +67,7 @@ module.exports = {
       __VUE_OPTIONS_API__: false,
       __VUE_PROD_DEVTOOLS__: false,
     }),
+    new ProgressPlugin(),
     new HTMLWebpackPlugin({
       template: _resolve('index.html'), // 指定要使用的 html 模板地址
       filename: 'index.html', // 打包后输出的文件名
@@ -75,5 +77,6 @@ module.exports = {
     new EsLintPlugin(),
     // 打包时清除旧的打包，只保留当前最新的打包
     new CleanWebpackPlugin()
-  ]
+  ],
+  stats: 'errors-warnings'
 }
