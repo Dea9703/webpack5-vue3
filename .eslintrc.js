@@ -52,6 +52,7 @@ module.exports = {
     'arrow-body-style': [ 'error', 'as-needed' ],
     'arrow-parens': [ 'error', 'as-needed' ],
     'arrow-spacing': 'error',
-    'vue/comment-directive': 'off'
+    'vue/comment-directive': 'off',
+    'vue/multi-word-component-names': 'off'
   }
 }
