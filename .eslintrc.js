@@ -14,7 +14,7 @@ module.exports = {
     'vue'
   ],
   parserOptions: {
-    ecmaVersion: 6, // 指定使用的 es 版本
+    ecmaVersion: 12, // 指定使用的 es 版本
     sourceType: 'module', // 模块化
     ecmaFeature: { // 额外语言特性
       jsx: true
@@ -37,15 +37,16 @@ module.exports = {
     'object-curly-spacing': [ 2, 'always' ],
     'array-bracket-spacing': [ 2, 'always' ],
     'comma-spacing': [ 2, { 'before': false, 'after': true } ],
+    'comma-dangle': [ 'error', 'never' ],
     'function-paren-newline': [ 'error', { 'minItems': 5 } ],
     'no-empty-function': 'error',
-    'keyword-spacing': [ 'error', { 'after': true, } ],
+    'keyword-spacing': [ 'error', { 'after': true } ],
     'space-before-blocks': 'error',
     'space-infix-ops': 'error',
     'space-unary-ops': [
       2, {
         'words': true,
-        'nonwords': false,
+        'nonwords': false
       } ],
     'spaced-comment': [ 'error', 'always' ],
     'semi-spacing': [ 'error', { 'before': false, 'after': true } ],
@@ -53,6 +54,11 @@ module.exports = {
     'arrow-parens': [ 'error', 'as-needed' ],
     'arrow-spacing': 'error',
     'vue/comment-directive': 'off',
-    'vue/multi-word-component-names': 'off'
+    'vue/multi-word-component-names': 'off',
+    'vue/singleline-html-element-content-newline': [ 'off', {
+      'ignoreWhenNoAttributes': true,
+      'ignoreWhenEmpty': true
+    } ],
+    'vue/max-attributes-per-line': [ 'error', { 'singleline': { 'max': 4 }, 'multiline': { max: 3 } } ]
   }
 }
