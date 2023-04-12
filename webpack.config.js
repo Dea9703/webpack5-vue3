@@ -5,6 +5,8 @@ const { VueLoaderPlugin } = require('vue-loader/dist/index')
 const EsLintPlugin = require('eslint-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const { ProgressPlugin } = require('webpack')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 
 const _resolve = src => path.resolve(__dirname, src)
 
@@ -13,7 +15,7 @@ module.exports = {
   entry: { main: _resolve('src/main.js') },
   output: {
     path: _resolve('dist'),
-    filename: '[name][hash:5].bundle.js'
+    filename: '[name][fullhash:5].bundle.js'
   },
   module: {
     rules: [
@@ -40,13 +42,18 @@ module.exports = {
       {
         test: /\.css$/,
         // use 后面跟数组，表示这个文件由多个 loader 去处理，处理顺序是由后到前
-        use: [ 'style-loader', 'css-loader' ]
+        use: [
+          // 'style-loader', // 开发使用
+          MiniCssExtractPlugin.loader, // ---> 处理打包时抽离 css 使用
+          'css-loader'
+        ]
       },
       {
         test: /\.s[ac]ss$/i,
         use: [
           // 将 JS 字符串生成为 style 节点
           'style-loader',
+          // MiniCssExtractPlugin.loader, ---> 处理打包时抽离 css
           // 将 CSS 转化成 CommonJS 模块
           'css-loader',
           // 将 Sass 编译成 CSS
@@ -74,7 +81,11 @@ module.exports = {
     new VueLoaderPlugin(),
     new EsLintPlugin(),
     // 打包时清除旧的打包，只保留当前最新的打包
-    new CleanWebpackPlugin()
+    new CleanWebpackPlugin(),
+    // 打包抽离 css
+    new MiniCssExtractPlugin({ filename: '[name][chunkhash:5].css' }),
+    // css压缩
+    new CssMinimizerPlugin()
   ],
   stats: 'errors-warnings'
 }
