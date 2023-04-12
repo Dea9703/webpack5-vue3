@@ -7,12 +7,9 @@ module.exports = {
   // // 继承，可以在这里继承那些配置好的规范，不再需要一条条的去手写
   extends: [
     // 继承的插件（需要在 plugins 中注册）
-    'plugin:vue/strongly-recommended'
-  ],
+    'plugin:vue/strongly-recommended' ],
   // 插件，额外的 rules + 提供一套现成的规范
-  plugins: [
-    'vue'
-  ],
+  plugins: [ 'vue' ],
   parserOptions: {
     ecmaVersion: 12, // 指定使用的 es 版本
     sourceType: 'module', // 模块化
@@ -29,27 +26,47 @@ module.exports = {
     */
     'semi': [ 'error', 'never' ],
     'quotes': [ 'error', 'single' ],
-    'no-mixed-spaces-and-tabs': 2,
+    'no-mixed-spaces-and-tabs': 'error',
     // 不是2个空格缩进报错
     'indent': [ 'error', 2 ],
-    'no-multi-spaces': 2,
-    'key-spacing': 2,
-    'object-curly-spacing': [ 2, 'always' ],
-    'array-bracket-spacing': [ 2, 'always' ],
-    'comma-spacing': [ 2, { 'before': false, 'after': true } ],
+    'no-trailing-spaces': 'error',
+    'no-multi-spaces': 'error',
+    'key-spacing': 'error',
+    'eol-last': [ 'error', 'always' ],
+    'object-property-newline': 'error',
+    'object-curly-spacing': [ 'error', 'always' ],
+    'object-curly-newline': [ 'error', {
+      'multiline': true,
+      'minProperties': 3
+    } ],
+    'array-bracket-spacing': [ 'error', 'always' ],
+    'array-element-newline': [
+      'error',
+      'consistent',
+      {
+        'minItems': 3,
+        'multiline': true
+      }
+    ],
+    'comma-spacing': [ 'error', {
+      'before': false,
+      'after': true
+    } ],
     'comma-dangle': [ 'error', 'never' ],
     'function-paren-newline': [ 'error', { 'minItems': 5 } ],
     'no-empty-function': 'error',
     'keyword-spacing': [ 'error', { 'after': true } ],
     'space-before-blocks': 'error',
     'space-infix-ops': 'error',
-    'space-unary-ops': [
-      2, {
-        'words': true,
-        'nonwords': false
-      } ],
+    'space-unary-ops': [ 'error', {
+      'words': true,
+      'nonwords': false
+    } ],
     'spaced-comment': [ 'error', 'always' ],
-    'semi-spacing': [ 'error', { 'before': false, 'after': true } ],
+    'semi-spacing': [ 'error', {
+      'before': false,
+      'after': true
+    } ],
     'arrow-body-style': [ 'error', 'as-needed' ],
     'arrow-parens': [ 'error', 'as-needed' ],
     'arrow-spacing': 'error',
@@ -59,6 +76,9 @@ module.exports = {
       'ignoreWhenNoAttributes': true,
       'ignoreWhenEmpty': true
     } ],
-    'vue/max-attributes-per-line': [ 'error', { 'singleline': { 'max': 4 }, 'multiline': { max: 3 } } ]
+    'vue/max-attributes-per-line': [ 'error', {
+      'singleline': { 'max': 4 },
+      'multiline': { max: 3 }
+    } ]
   }
 }
