@@ -10,9 +10,7 @@ const _resolve = src => path.resolve(__dirname, src)
 
 module.exports = {
   mode: 'development',
-  entry: {
-    main: _resolve('src/main.js')
-  },
+  entry: { main: _resolve('src/main.js') },
   output: {
     path: _resolve('dist'),
     filename: '[name][hash:5].bundle.js'
@@ -30,7 +28,7 @@ module.exports = {
                 targets: {
                   browsers: [
                     '>1%', // 占有率大于 1% 的浏览器
-                    'last 2 versions', // 浏览器最新的两个版本 
+                    'last 2 versions', // 浏览器最新的两个版本
                     'not ie <= 8' // 不支持 ie8 及以下的浏览器
                   ]
                 }
@@ -52,7 +50,7 @@ module.exports = {
           // 将 CSS 转化成 CommonJS 模块
           'css-loader',
           // 将 Sass 编译成 CSS
-          'sass-loader',
+          'sass-loader'
         ]
       },
       {
@@ -65,7 +63,7 @@ module.exports = {
     // 消除浏览器控制台工具警告
     new webpack.DefinePlugin({
       __VUE_OPTIONS_API__: false,
-      __VUE_PROD_DEVTOOLS__: false,
+      __VUE_PROD_DEVTOOLS__: false
     }),
     new ProgressPlugin(),
     new HTMLWebpackPlugin({
