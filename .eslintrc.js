@@ -7,9 +7,12 @@ module.exports = {
   // // 继承，可以在这里继承那些配置好的规范，不再需要一条条的去手写
   extends: [
     // 继承的插件（需要在 plugins 中注册）
-    'plugin:vue/strongly-recommended' ],
+    'plugin:vue/strongly-recommended'
+  ],
   // 插件，额外的 rules + 提供一套现成的规范
-  plugins: [ 'vue' ],
+  plugins: [
+    'vue'
+  ],
   parserOptions: {
     ecmaVersion: 12, // 指定使用的 es 版本
     sourceType: 'module', // 模块化
