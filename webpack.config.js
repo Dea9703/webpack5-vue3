@@ -1,17 +1,29 @@
 const path = require('path')
-const webpack = require('webpack')
 const HTMLWebpackPlugin = require('html-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader/dist/index')
-const EsLintPlugin = require('eslint-webpack-plugin')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const { ProgressPlugin } = require('webpack')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
-
 const _resolve = src => path.resolve(__dirname, src)
+const Plugins = [
+  new HTMLWebpackPlugin({
+    template: _resolve('index.html'), // 指定要使用的 html 模板地址
+    filename: 'index.html', // 打包后输出的文件名
+    title: '手搭 vue3 开发环境' // index.html 模板内，通过 <%= htmlWebpackPlugin.options.title %> 拿到变量
+  }),
+  new VueLoaderPlugin(),
+  // 项目启动/打包进度条
+  new ProgressPlugin()
+]
+
+function hasMiniCss() {
+  // MiniCssExtractPlugin ---> 打包时抽离 css
+  if (process.env.NODE_ENV === 'production') {
+    Plugins.push(new MiniCssExtractPlugin({ filename: '[name][chunkhash:5].css' }))
+  }
+}
+hasMiniCss()
 
 module.exports = {
-  mode: 'development',
   entry: { main: _resolve('src/main.js') },
   output: {
     path: _resolve('dist'),
@@ -40,52 +52,27 @@ module.exports = {
         }
       },
       {
+        test: /\.vue$/,
+        use: 'vue-loader'
+      },
+      {
         test: /\.css$/,
         // use 后面跟数组，表示这个文件由多个 loader 去处理，处理顺序是由后到前
         use: [
-          // 'style-loader', // 开发使用
-          MiniCssExtractPlugin.loader, // ---> 处理打包时抽离 css 使用
+          // MiniCssExtractPlugin.loader ---> 处理打包时抽离 css 使用 'style-loader' ---> 开发时使用
+          process.env.NODE_ENV === 'production' ? MiniCssExtractPlugin.loader : 'style-loader',
           'css-loader'
         ]
       },
       {
         test: /\.s[ac]ss$/i,
         use: [
-          // 将 JS 字符串生成为 style 节点
-          'style-loader',
-          // MiniCssExtractPlugin.loader, ---> 处理打包时抽离 css
-          // 将 CSS 转化成 CommonJS 模块
+          process.env.NODE_ENV === 'production' ? MiniCssExtractPlugin.loader : 'style-loader',
           'css-loader',
-          // 将 Sass 编译成 CSS
           'sass-loader'
         ]
-      },
-      {
-        test: /\.vue$/,
-        use: 'vue-loader'
       }
     ]
   },
-  plugins: [
-    // 消除浏览器控制台工具警告
-    new webpack.DefinePlugin({
-      __VUE_OPTIONS_API__: false,
-      __VUE_PROD_DEVTOOLS__: false
-    }),
-    new ProgressPlugin(),
-    new HTMLWebpackPlugin({
-      template: _resolve('index.html'), // 指定要使用的 html 模板地址
-      filename: 'index.html', // 打包后输出的文件名
-      title: '手搭 vue3 开发环境' // index.html 模板内，通过 <%= htmlWebpackPlugin.options.title %> 拿到变量
-    }),
-    new VueLoaderPlugin(),
-    new EsLintPlugin(),
-    // 打包时清除旧的打包，只保留当前最新的打包
-    new CleanWebpackPlugin(),
-    // 打包抽离 css
-    new MiniCssExtractPlugin({ filename: '[name][chunkhash:5].css' }),
-    // css压缩
-    new CssMinimizerPlugin()
-  ],
-  stats: 'errors-warnings'
+  plugins: Plugins
 }
