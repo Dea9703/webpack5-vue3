@@ -3,6 +3,8 @@ const HTMLWebpackPlugin = require('html-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader/dist/index')
 const { ProgressPlugin } = require('webpack')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+
 const _resolve = src => path.resolve(__dirname, src)
 const Plugins = [
   new HTMLWebpackPlugin({
@@ -13,6 +15,8 @@ const Plugins = [
   new VueLoaderPlugin(),
   // 项目启动/打包进度条
   new ProgressPlugin()
+  // 项目启动/打包可视化分析
+  // new BundleAnalyzerPlugin()
 ]
 
 function hasMiniCss() {
