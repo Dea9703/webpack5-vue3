@@ -2,7 +2,8 @@ module.exports = {
   // 环境设置，环境里面没有的不能使用
   env: {
     browser: true,
-    es2021: true
+    es2021: true,
+    node: true
   },
   // // 继承，可以在这里继承那些配置好的规范，不再需要一条条的去手写
   extends: [
